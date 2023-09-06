@@ -18,7 +18,7 @@ pages <- read_html(sprintf(url, 0)) %>%
 pages <- pages - 1
 
 # Crawler function
-scrape_critic <- function(url = url, pages = pages) {
+scrape_critic <- function(url = url, pages = pages, .verbose = TRUE, .errorhandling = "remove") {
   data <- tibble()
   
   foreach(i = 0:pages) %do% {
