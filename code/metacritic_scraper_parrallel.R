@@ -20,8 +20,8 @@ pages <- pages - 1
 
 # Scrape Page
 scrape_url <- function(url) {
-  require(rvest)
-  require(tidyverse)
+  library(rvest)
+  library(tidyverse)
 
   html <- read_html(url)
   
@@ -68,7 +68,6 @@ scrape_url <- function(url) {
   
   table %>%
     return()
-  Sys.sleep(5)
 }
 
 # Set up parallel back-end 
@@ -76,13 +75,12 @@ cores=detectCores()
 cl <- makeCluster(cores[1]-1) ## Use less than all available cores
 registerDoParallel(cl)
 
-df <- foreach(i=0:2, .combine=rbind) %dopar% {
+df <- foreach(i=0:pages) %dopar% {
   
-  url <- sprintf(page_url, i)
-  data <- scrape_url(url = url)
+  data <- scrape_url(url = sprintf(page_url, i))
   
-  data %>%
-    return()
+  data 
+  
 }
 # Stop cluster
 stopCluster(cl)
